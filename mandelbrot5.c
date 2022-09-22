@@ -31,7 +31,7 @@ typedef struct {
 	double complex *carray; // array for storing complex numbers c, dim: WIDTH * HEIGHT
 	int maxIter;  // maximum iterations before confident point is in mandelbrot set
 } Parameters;
-
+// 
 
 /* function prototypes */
 void initialise(Parameters *);
