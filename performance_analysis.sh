@@ -35,13 +35,16 @@ else
     size=$4
 fi
 
-if [ -z $5 ]; then
-    threads=2
-else
-    threads=$5
-fi
+# if [ -z $5 ]; then
+#     threads=2
+# else
+#     threads=$5
+# fi
+
+save_plot=false
 
 # run make all print to file and print error if it fails
+make clean
 echo "Running make all..."
 make all > make_all_output.txt 2>&1 || { cat make_all_output.txt ; exit 1; }
 echo "Make all successful!"
@@ -57,38 +60,45 @@ touch output.txt
 # all programs compiled are in the format: <program_name>.out
 program_list=$(ls *.out)
 # for each program in the list run it and plot the mandel.dat file using gnu plot
-for program in $program_list
-do
-    # print the program name
-    echo $program
+base_program=mb5.out
+echo "Running $base_program with $iterations iterations, x origin = $x, y origin = $y, window size = $size"
+/usr/bin/time ./$base_program $iterations $x $y $size 2>&1 >> output.txt | cat >> output.txt
 
-    # get the time elapsed and memory used for each program and print it to the terminal
-    # the default mandelbrot does not require a thread count
-    if [ $program == "mb5.out" ]; then
-        echo "Running $program with $iterations iterations, x origin = $x, y origin = $y, window size = $size"
-        /usr/bin/time ./$program $iterations $x $y $size 2>&1 >> output.txt | cat >> output.txt
-    # given as 's' and 'p' respectively
-    elif [ $program == "mb5_fork.out" ]; then
-        echo "Running $program with sockets, $iterations iterations and $threads threads, x origin = $x, y origin = $y, window size = $size"
-        /usr/bin/time ./$program $iterations $x $y $size $threads 's' 2>&1 >> output.txt | cat >> output.txt
-        echo "Running $program with pipes, $iterations iterations and $threads threads, x origin = $x, y origin = $y, window size = $size"
-        /usr/bin/time ./$program $iterations $x $y $size $threads 'p' 2>&1 >> output.txt | cat >> output.txt
-    else
-        echo "Running $program with $iterations iterations and $threads threads, x origin = $x, y origin = $y, window size = $size"
-        /usr/bin/time ./$program $iterations $x $y $size $threads 2>&1 >> output.txt | cat >> output.txt
-    fi
-    
-    # plot the mandel.dat file using gnuplot and the mandel.gp file
-    gnuplot mandel.gp > /dev/null
-    # save the plot as a png file
-    mv mandel.png images/$program.png 
-    
+gnuplot mandel.gp > /dev/null
+# save the plot as a png file
+mv mandel.png images/$program.png  
+
+# run parellel version of program
+for threads in 2 4 6 8
+do
+    for program in $program_list
+    do
+        # get the time elapsed and memory used for each program and print it to the terminal
+        # the default mandelbrot does not require a thread count
+        if [ $program == "mb5.out" ]; then
+        continue
+        # given as 's' and 'p' respectively
+        elif [ $program == "mb5_fork.out" ]; then
+            echo "Running $program with sockets, $iterations iterations and $threads threads, x origin = $x, y origin = $y, window size = $size"
+            /usr/bin/time ./$program $iterations $x $y $size $threads 's' 2>&1 >> output.txt | cat >> output.txt
+            echo "Running $program with pipes, $iterations iterations and $threads threads, x origin = $x, y origin = $y, window size = $size"
+            /usr/bin/time ./$program $iterations $x $y $size $threads 'p' 2>&1 >> output.txt | cat >> output.txt
+        else
+            echo "Running $program with $iterations iterations and $threads threads, x origin = $x, y origin = $y, window size = $size"
+            /usr/bin/time ./$program $iterations $x $y $size $threads 2>&1 >> output.txt | cat >> output.txt
+        fi
+        
+        # plot the mandel.dat file using gnuplot and the mandel.gp file
+        if $save_plot == true; then
+            gnuplot mandel.gp > /dev/null
+            # save the plot as a png file
+            mv mandel.png images/$program.png
+        fi
+    done
 done
 
-# awk -f fork.awk fork_comparison.txt > fork_analysis.dat
-# gnuplot fork_analysis.gp > /dev/null
-
-
+awk -f comparison.awk 'output.txt' > mydata.dat
+gnuplot mydata.gp
 
 # command to run this script
 # sh performance_analysis.sh

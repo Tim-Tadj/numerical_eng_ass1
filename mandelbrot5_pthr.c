@@ -57,7 +57,8 @@ int main(int argc, char *argv[])
 	int maxIter;
 	double xc, yc, size;
 	Parameters p;
-	p.numThreads = NUM_THREADS;
+	int numThreads = NUM_THREADS;
+	// p.numThreads = NUM_THREADS;
 
 	
 	if (argc < 2) {
@@ -88,7 +89,7 @@ int main(int argc, char *argv[])
 		sscanf(argv[2], "%lf", &xc);
 		sscanf(argv[3], "%lf", &yc);
 		sscanf(argv[4], "%lf", &size);
-		sscanf(argv[5], "%i", &p.numThreads);
+		sscanf(argv[5], "%i", &numThreads);
 
 		size = size / 2;
 		p.xMin = xc - size;
@@ -100,6 +101,7 @@ int main(int argc, char *argv[])
 	p.maxIter = maxIter;
 	p.width = WIDTH;
 	p.height = HEIGHT;
+	p.numThreads = numThreads;
 
 	// printf("xMin = %lf\nxMax = %lf\nyMin = %lf\nyMax = %lf\nMaximum iterations = %i\n", p.xMin, p.xMax, p.yMin, p.yMax, p.maxIter);
 	
@@ -271,17 +273,6 @@ void mandelcompute_pthread(Parameters *p)
 	for (int i = 0; i < p->numThreads; i++) {
 		pthread_join(p->threads[i], NULL);
 	}
-	// checkl for non-zero elements in iterations array
-	int count = 0;
-	for (int i = 0; i < p->height; i++) {
-		for (int j = 0; j < p->width; j++) {
-			if (p->iterations[i * p->width + j] != 0) {
-				count++;
-			}
-		}
-	}
-	// printf("non-zero elements in iterations array: %d\n", count);
-
 }
 
 void* mandelComputeThread(void *arg)
@@ -293,7 +284,6 @@ void* mandelComputeThread(void *arg)
 
 	//get the thread id ising pthread_self()
 	pthread_t thread_id = pthread_self();
-
 	// get index where the thread id matches the thread id in the array
 	int thread_idx = 0;
 	for (int i = 0; i < p->numThreads; i++) {

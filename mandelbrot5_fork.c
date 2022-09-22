@@ -420,10 +420,10 @@ void mandelcompute_fork(Parameters *p)
 		// printf("child %d writing to fd %i\n", process_idx-1, fd[process_idx-1][WRITE]);
 		int* buf = &p->iterations[i_start[process_idx]*p->width];
 		if (p->ipctype=='p'){
-			chwrite(fd[process_idx-1][WRITE], buf, chunk_size*p->width, 1000);
+			chwrite(fd[process_idx-1][WRITE], buf, chunk_size*p->width, 1024);
 		}
 		else if (p->ipctype=='s'){
-			chwrite(fd[process_idx-1][CHILD], buf, chunk_size*p->width, 1000);
+			chwrite(fd[process_idx-1][CHILD], buf, chunk_size*p->width, 1024);
 		}
 		exit(0);
 	} else {
@@ -434,10 +434,10 @@ void mandelcompute_fork(Parameters *p)
 			int* buf = &p->iterations[i_start[i+1]*p->width];
 			// printf("parent reading from fd %i\n", fd[i][READ]);
 			if(p->ipctype=='p'){
-				chread(fd[i][READ], buf, p->width*chunk_size, 1000);
+				chread(fd[i][READ], buf, p->width*chunk_size, 1024);
 			}
 			else if(p->ipctype=='s'){
-				chread(fd[i][PARENT], buf, p->width*chunk_size, 1000);
+				chread(fd[i][PARENT], buf, p->width*chunk_size, 1024);
 			}
 		}
 		// printf("parent finished reading from children\n");

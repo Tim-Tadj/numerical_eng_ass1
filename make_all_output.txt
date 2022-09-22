@@ -1,8 +1,16 @@
 make mb5.out
-make[1]: `mb5.out' is up to date.
+make[1]: Entering directory '/mnt/c/UniWork/Year 4 Tri 2/NumMethods/Assignment'
+gcc mandelbrot5.c -o mb5.out -Wall -fdiagnostics-color=always -lm
+make[1]: Leaving directory '/mnt/c/UniWork/Year 4 Tri 2/NumMethods/Assignment'
 make mb5_omp.out
-make[1]: `mb5_omp.out' is up to date.
+make[1]: Entering directory '/mnt/c/UniWork/Year 4 Tri 2/NumMethods/Assignment'
+gcc mandelbrot5_omp.c -o mb5_omp.out   -fopenmp -Wall -fdiagnostics-color=always -lm
+make[1]: Leaving directory '/mnt/c/UniWork/Year 4 Tri 2/NumMethods/Assignment'
 make mb5_pthr.out
-make[1]: `mb5_pthr.out' is up to date.
+make[1]: Entering directory '/mnt/c/UniWork/Year 4 Tri 2/NumMethods/Assignment'
+gcc mandelbrot5_pthr.c -o mb5_pthr.out  -pthread -Wall -fdiagnostics-color=always -lm
+make[1]: Leaving directory '/mnt/c/UniWork/Year 4 Tri 2/NumMethods/Assignment'
 make mb5_fork.out
-make[1]: `mb5_fork.out' is up to date.
+make[1]: Entering directory '/mnt/c/UniWork/Year 4 Tri 2/NumMethods/Assignment'
+gcc mandelbrot5_fork.c -o mb5_fork.out -Wall -fdiagnostics-color=always -lm
+make[1]: Leaving directory '/mnt/c/UniWork/Year 4 Tri 2/NumMethods/Assignment'
