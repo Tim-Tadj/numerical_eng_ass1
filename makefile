@@ -25,5 +25,4 @@ mb5_fork.out: mandelbrot5_fork.c
 	gcc $< -o $@ $(PARAMS)
 
 clean:
-	rm *.o
 	rm *.out

@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
 	int maxIter;
 	double xc, yc, size;
 	Parameters p;
-	
+	p.numThreads = NUM_THREADS;
 
 	
 	if (argc < 2) {
@@ -100,7 +100,6 @@ int main(int argc, char *argv[])
 	p.maxIter = maxIter;
 	p.width = WIDTH;
 	p.height = HEIGHT;
-	p.numThreads = NUM_THREADS;
 
 	// printf("xMin = %lf\nxMax = %lf\nyMin = %lf\nyMax = %lf\nMaximum iterations = %i\n", p.xMin, p.xMax, p.yMin, p.yMax, p.maxIter);
 	

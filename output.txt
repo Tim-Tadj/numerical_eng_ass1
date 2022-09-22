@@ -1,8 +1,10 @@
-Default computation time: 154.281747 seconds
-155.89user 0.35system 2:37.70elapsed 99%CPU (0avgtext+0avgdata 29052maxresident)k
-48inputs+0outputs (1major+1566minor)pagefaults 0swaps
-Using sockets to compute Mandelbrot set
-Using sockets to compute Mandelbrot set
-Fork: threads:2 time:84.815864 seconds
-82.90user 0.22system 1:28.14elapsed 94%CPU (0avgtext+0avgdata 29440maxresident)k
-56inputs+0outputs (1major+2281minor)pagefaults 0swaps
+Default: time:22.376202 seconds
+       24.07 real        23.56 user         0.10 sys
+Fork: threads:2 time:18.924330_seconds ipc:s
+       20.21 real        23.75 user         0.10 sys
+Fork: threads:2 time:18.917612_seconds ipc:p
+       20.18 real        23.74 user         0.08 sys
+Omp: threads:2 time:18.898247 seconds
+       20.18 real        23.91 user         0.09 sys
+Pthr: threads:2 time:18.972723 seconds
+       20.27 real        23.79 user         0.12 sys

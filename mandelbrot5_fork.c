@@ -162,7 +162,7 @@ int main(int argc, char *argv[])
 	clock_gettime(CLOCK_MONOTONIC, &finish_time);
 	elapsed = (finish_time.tv_sec - start_time.tv_sec);
 	elapsed += (finish_time.tv_nsec - start_time.tv_nsec) / 1000000000.0;
-	printf("Fork: threads:%d time:%f seconds\n", p.numProcesses, elapsed);
+	printf("Fork: threads:%d time:%f_seconds ipc:%c\n", p.numProcesses, elapsed, p.ipctype);
 
 	clock_gettime(CLOCK_MONOTONIC, &start_time);
 	histogramColouring(&p);
@@ -359,7 +359,7 @@ void mandelcompute_fork(Parameters *p)
 
 	// do pipes
 	if (p->ipctype=='p'){
-		printf("Using pipes to compute Mandelbrot set\n");
+		// printf("Using pipes to compute Mandelbrot set\n");
 		for (int i = 0; i < n_children; i++){
 			if (pipe(fd[i]) < 0){
 				perror("pipe creation failed");
@@ -368,7 +368,7 @@ void mandelcompute_fork(Parameters *p)
 		}
 	}
 	else if (p->ipctype=='s'){
-		printf("Using sockets to compute Mandelbrot set\n");
+		// printf("Using sockets to compute Mandelbrot set\n");
 		for (int i = 0; i < n_children; i++){
 			if (socketpair(AF_UNIX, SOCK_STREAM, 0, fd[i]) < 0){
 				perror("socket creation failed");

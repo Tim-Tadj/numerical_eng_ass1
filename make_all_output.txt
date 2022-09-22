@@ -1,16 +1,8 @@
 make mb5.out
-make[1]: Entering directory '/mnt/c/UniWork/Year 4 Tri 2/NumMethods/Assignment'
-make[1]: 'mb5.out' is up to date.
-make[1]: Leaving directory '/mnt/c/UniWork/Year 4 Tri 2/NumMethods/Assignment'
+make[1]: `mb5.out' is up to date.
 make mb5_omp.out
-make[1]: Entering directory '/mnt/c/UniWork/Year 4 Tri 2/NumMethods/Assignment'
-make[1]: 'mb5_omp.out' is up to date.
-make[1]: Leaving directory '/mnt/c/UniWork/Year 4 Tri 2/NumMethods/Assignment'
+make[1]: `mb5_omp.out' is up to date.
 make mb5_pthr.out
-make[1]: Entering directory '/mnt/c/UniWork/Year 4 Tri 2/NumMethods/Assignment'
-make[1]: 'mb5_pthr.out' is up to date.
-make[1]: Leaving directory '/mnt/c/UniWork/Year 4 Tri 2/NumMethods/Assignment'
+make[1]: `mb5_pthr.out' is up to date.
 make mb5_fork.out
-make[1]: Entering directory '/mnt/c/UniWork/Year 4 Tri 2/NumMethods/Assignment'
-make[1]: 'mb5_fork.out' is up to date.
-make[1]: Leaving directory '/mnt/c/UniWork/Year 4 Tri 2/NumMethods/Assignment'
+make[1]: `mb5_fork.out' is up to date.

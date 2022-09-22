@@ -1,3 +1,4 @@
+#!/bin/bash
 # You should write a bash script called performance analysis.sh that automatically runs
 # the various analyses, collates the results for each parallelisation strategy, prints a numerical
 # report in the terminal, and generates plots using the gnuplot program. It should save the
@@ -40,12 +41,6 @@ else
     threads=$5
 fi
 
-if [ -z $6 ]; then
-    ipc='s'
-else
-    ipc=$6
-fi
-
 # run make all print to file and print error if it fails
 echo "Running make all..."
 make all > make_all_output.txt 2>&1 || { cat make_all_output.txt ; exit 1; }
@@ -74,8 +69,10 @@ do
         /usr/bin/time ./$program $iterations $x $y $size 2>&1 >> output.txt | cat >> output.txt
     # given as 's' and 'p' respectively
     elif [ $program == "mb5_fork.out" ]; then
-        echo "Running $program with $iterations iterations and $threads threads, x origin = $x, y origin = $y, window size = $size, '$ipc' type IPC"
-        /usr/bin/time ./$program $iterations $x $y $size $threads $ipc 2>&1 >> output.txt | cat >> output.txt
+        echo "Running $program with sockets, $iterations iterations and $threads threads, x origin = $x, y origin = $y, window size = $size"
+        /usr/bin/time ./$program $iterations $x $y $size $threads 's' 2>&1 >> output.txt | cat >> output.txt
+        echo "Running $program with pipes, $iterations iterations and $threads threads, x origin = $x, y origin = $y, window size = $size"
+        /usr/bin/time ./$program $iterations $x $y $size $threads 'p' 2>&1 >> output.txt | cat >> output.txt
     else
         echo "Running $program with $iterations iterations and $threads threads, x origin = $x, y origin = $y, window size = $size"
         /usr/bin/time ./$program $iterations $x $y $size $threads 2>&1 >> output.txt | cat >> output.txt
@@ -88,8 +85,13 @@ do
     
 done
 
+# awk -f fork.awk fork_comparison.txt > fork_analysis.dat
+# gnuplot fork_analysis.gp > /dev/null
+
+
+
 # command to run this script
-# ./performance_analysis.sh
+# sh performance_analysis.sh
 
 # install gnuplot for wsl ubuntu
 # sudo apt-get install gnuplot
