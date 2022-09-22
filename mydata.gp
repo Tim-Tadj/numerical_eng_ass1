@@ -1,9 +1,12 @@
-set key font ', 30'
-set xtics font ', 30'
-set ytics font ', 30'
-set xlabel font ', 30' offset 0,-1
-set ylabel font ', 30' offset -9,0
-set lmargin 23
+set key font ', 40'
+set xtics font ', 45'
+set ytics font ', 45'
+set xlabel font ', 45' offset 0,-1
+set ylabel font ', 45' offset -16,0
+# Set the legend in front of the plot
+# set key opaque
+set border back
+set lmargin 29
 set rmargin 10
 set tmargin 6
 set bmargin 6
