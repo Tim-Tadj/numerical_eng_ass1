@@ -1,0 +1,16 @@
+make base
+make[1]: Entering directory '/mnt/c/UniWork/Year 4 Tri 2/NumMethods/Assignment'
+gcc mandelbrot5.c -o mb5.out -Wall -fdiagnostics-color=always -lm
+make[1]: Leaving directory '/mnt/c/UniWork/Year 4 Tri 2/NumMethods/Assignment'
+make openmp
+make[1]: Entering directory '/mnt/c/UniWork/Year 4 Tri 2/NumMethods/Assignment'
+gcc mandelbrot5_omp.c -fopenmp -o mb5_omp.out -Wall -fdiagnostics-color=always -lm
+make[1]: Leaving directory '/mnt/c/UniWork/Year 4 Tri 2/NumMethods/Assignment'
+make pthread
+make[1]: Entering directory '/mnt/c/UniWork/Year 4 Tri 2/NumMethods/Assignment'
+gcc mandelbrot5_pthr.c -pthread -o mb5_pthr.out -Wall -fdiagnostics-color=always -lm
+make[1]: Leaving directory '/mnt/c/UniWork/Year 4 Tri 2/NumMethods/Assignment'
+make fork
+make[1]: Entering directory '/mnt/c/UniWork/Year 4 Tri 2/NumMethods/Assignment'
+gcc mandelbrot5_fork.c -o mb5_fork.out -Wall -fdiagnostics-color=always -lm
+make[1]: Leaving directory '/mnt/c/UniWork/Year 4 Tri 2/NumMethods/Assignment'
