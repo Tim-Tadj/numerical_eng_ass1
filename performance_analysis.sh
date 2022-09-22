@@ -35,6 +35,16 @@ else
     size=$4
 fi
 
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    timeProgram=/usr/bin/time
+    awkProgram=awk
+else
+    timeProgram=gtime
+    awkProgram=gawk
+fi
+
+echo $timeProgram
+
 # if [ -z $5 ]; then
 #     threads=2
 # else
@@ -62,7 +72,7 @@ program_list=$(ls *.out)
 # for each program in the list run it and plot the mandel.dat file using gnu plot
 base_program=mb5.out
 echo "Running $base_program with $iterations iterations, x origin = $x, y origin = $y, window size = $size"
-/usr/bin/time ./$base_program $iterations $x $y $size 2>&1 >> output.txt | cat >> output.txt
+$timeProgram ./$base_program $iterations $x $y $size 2>&1 >>  output.txt | cat >> output.txt
 
 gnuplot mandel.gp > /dev/null
 # save the plot as a png file
@@ -80,12 +90,12 @@ do
         # given as 's' and 'p' respectively
         elif [ $program == "mb5_fork.out" ]; then
             echo "Running $program with sockets, $iterations iterations and $threads threads, x origin = $x, y origin = $y, window size = $size"
-            /usr/bin/time ./$program $iterations $x $y $size $threads 's' 2>&1 >> output.txt | cat >> output.txt
+            $timeProgram ./$program $iterations $x $y $size $threads 's' 2>&1 >>  output.txt | cat >> output.txt
             echo "Running $program with pipes, $iterations iterations and $threads threads, x origin = $x, y origin = $y, window size = $size"
-            /usr/bin/time ./$program $iterations $x $y $size $threads 'p' 2>&1 >> output.txt | cat >> output.txt
+            $timeProgram ./$program $iterations $x $y $size $threads 'p' 2>&1 >>  output.txt | cat >> output.txt
         else
             echo "Running $program with $iterations iterations and $threads threads, x origin = $x, y origin = $y, window size = $size"
-            /usr/bin/time ./$program $iterations $x $y $size $threads 2>&1 >> output.txt | cat >> output.txt
+            $timeProgram ./$program $iterations $x $y $size $threads 2>&1 >>  output.txt | cat >> output.txt
         fi
         
         # plot the mandel.dat file using gnuplot and the mandel.gp file
@@ -97,7 +107,7 @@ do
     done
 done
 
-awk -f comparison.awk 'output.txt' > mydata.dat
+$awkProgram -f comparison.awk 'output.txt' > mydata.dat
 gnuplot mydata.gp
 
 # command to run this script

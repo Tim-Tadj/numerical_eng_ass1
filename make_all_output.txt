@@ -1,16 +1,77 @@
 make mb5.out
-make[1]: Entering directory '/mnt/c/UniWork/Year 4 Tri 2/NumMethods/Assignment'
 gcc mandelbrot5.c -o mb5.out -Wall -fdiagnostics-color=always -lm
-make[1]: Leaving directory '/mnt/c/UniWork/Year 4 Tri 2/NumMethods/Assignment'
+[1mmandelbrot5.c:62:11: [0m[0;1;35mwarning: [0m[1mvariable 'maxIter' is used uninitialized whenever 'if' condition is false [-Wsometimes-uninitialized][0m
+        else if (argc == 5) {
+[0;1;32m                 ^~~~~~~~~
+[0m[1mmandelbrot5.c:75:14: [0m[0;1;30mnote: [0muninitialized use occurs here[0m
+        p.maxIter = maxIter;
+[0;1;32m                    ^~~~~~~
+[0m[1mmandelbrot5.c:62:7: [0m[0;1;30mnote: [0mremove the 'if' if its condition is always true[0m
+        else if (argc == 5) {
+[0;1;32m             ^~~~~~~~~~~~~~~
+[0m[1mmandelbrot5.c:47:13: [0m[0;1;30mnote: [0minitialize the variable 'maxIter' to silence this warning[0m
+        int maxIter;
+[0;1;32m                   ^
+[0m[0;32m                    = 0
+[0m1 warning generated.
 make mb5_omp.out
-make[1]: Entering directory '/mnt/c/UniWork/Year 4 Tri 2/NumMethods/Assignment'
-gcc mandelbrot5_omp.c -o mb5_omp.out   -fopenmp -Wall -fdiagnostics-color=always -lm
-make[1]: Leaving directory '/mnt/c/UniWork/Year 4 Tri 2/NumMethods/Assignment'
+gcc mandelbrot5_omp.c -o mb5_omp.out -Xclang -fopenmp -lomp -Wall -fdiagnostics-color=always -lm
 make mb5_pthr.out
-make[1]: Entering directory '/mnt/c/UniWork/Year 4 Tri 2/NumMethods/Assignment'
 gcc mandelbrot5_pthr.c -o mb5_pthr.out  -pthread -Wall -fdiagnostics-color=always -lm
-make[1]: Leaving directory '/mnt/c/UniWork/Year 4 Tri 2/NumMethods/Assignment'
+[1mmandelbrot5_pthr.c:87:11: [0m[0;1;35mwarning: [0m[1mvariable 'maxIter' is used uninitialized whenever 'if' condition is false [-Wsometimes-uninitialized][0m
+        else if (argc == 6) {
+[0;1;32m                 ^~~~~~~~~
+[0m[1mmandelbrot5_pthr.c:101:14: [0m[0;1;30mnote: [0muninitialized use occurs here[0m
+        p.maxIter = maxIter;
+[0;1;32m                    ^~~~~~~
+[0m[1mmandelbrot5_pthr.c:87:7: [0m[0;1;30mnote: [0mremove the 'if' if its condition is always true[0m
+        else if (argc == 6) {
+[0;1;32m             ^~~~~~~~~~~~~~~
+[0m[1mmandelbrot5_pthr.c:57:13: [0m[0;1;30mnote: [0minitialize the variable 'maxIter' to silence this warning[0m
+        int maxIter;
+[0;1;32m                   ^
+[0m[0;32m                    = 0
+[0m1 warning generated.
 make mb5_fork.out
-make[1]: Entering directory '/mnt/c/UniWork/Year 4 Tri 2/NumMethods/Assignment'
 gcc mandelbrot5_fork.c -o mb5_fork.out -Wall -fdiagnostics-color=always -lm
-make[1]: Leaving directory '/mnt/c/UniWork/Year 4 Tri 2/NumMethods/Assignment'
+[1mmandelbrot5_fork.c:109:11: [0m[0;1;35mwarning: [0m[1mvariable 'ipctype' is used uninitialized whenever 'if' condition is true [-Wsometimes-uninitialized][0m
+        else if (argc == 6) {
+[0;1;32m                 ^~~~~~~~~
+[0m[1mmandelbrot5_fork.c:144:14: [0m[0;1;30mnote: [0muninitialized use occurs here[0m
+        p.ipctype = ipctype;
+[0;1;32m                    ^~~~~~~
+[0m[1mmandelbrot5_fork.c:109:7: [0m[0;1;30mnote: [0mremove the 'if' if its condition is always false[0m
+        else if (argc == 6) {
+[0;1;32m             ^~~~~~~~~~~~~~~~
+[0m[1mmandelbrot5_fork.c:97:11: [0m[0;1;35mwarning: [0m[1mvariable 'ipctype' is used uninitialized whenever 'if' condition is true [-Wsometimes-uninitialized][0m
+        else if (argc == 5) {
+[0;1;32m                 ^~~~~~~~~
+[0m[1mmandelbrot5_fork.c:144:14: [0m[0;1;30mnote: [0muninitialized use occurs here[0m
+        p.ipctype = ipctype;
+[0;1;32m                    ^~~~~~~
+[0m[1mmandelbrot5_fork.c:97:7: [0m[0;1;30mnote: [0mremove the 'if' if its condition is always false[0m
+        else if (argc == 5) {
+[0;1;32m             ^~~~~~~~~~~~~~~~
+[0m[1mmandelbrot5_fork.c:92:11: [0m[0;1;35mwarning: [0m[1mvariable 'ipctype' is used uninitialized whenever 'if' condition is true [-Wsometimes-uninitialized][0m
+        else if (argc == 2) {
+[0;1;32m                 ^~~~~~~~~
+[0m[1mmandelbrot5_fork.c:144:14: [0m[0;1;30mnote: [0muninitialized use occurs here[0m
+        p.ipctype = ipctype;
+[0;1;32m                    ^~~~~~~
+[0m[1mmandelbrot5_fork.c:92:7: [0m[0;1;30mnote: [0mremove the 'if' if its condition is always false[0m
+        else if (argc == 2) {
+[0;1;32m             ^~~~~~~~~~~~~~~~
+[0m[1mmandelbrot5_fork.c:86:6: [0m[0;1;35mwarning: [0m[1mvariable 'ipctype' is used uninitialized whenever 'if' condition is true [-Wsometimes-uninitialized][0m
+        if (argc < 2) {
+[0;1;32m            ^~~~~~~~
+[0m[1mmandelbrot5_fork.c:144:14: [0m[0;1;30mnote: [0muninitialized use occurs here[0m
+        p.ipctype = ipctype;
+[0;1;32m                    ^~~~~~~
+[0m[1mmandelbrot5_fork.c:86:2: [0m[0;1;30mnote: [0mremove the 'if' if its condition is always false[0m
+        if (argc < 2) {
+[0;1;32m        ^~~~~~~~~~~~~~~
+[0m[1mmandelbrot5_fork.c:80:14: [0m[0;1;30mnote: [0minitialize the variable 'ipctype' to silence this warning[0m
+        char ipctype;
+[0;1;32m                    ^
+[0m[0;32m                     = '\0'
+[0m4 warnings generated.

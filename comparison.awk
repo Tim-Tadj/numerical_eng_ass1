@@ -84,10 +84,19 @@ END{
     #thr_num forksocket forkpipe omp pthreads
     # j=0;
     for (i = 0; i < n_comparisons; i++) {
+        n_threads = threads_arr[i*n_comparisons];
         printf "%i ", threads_arr[i*n_comparisons];
         for(j = 0; j < n_programs; j++) {
             printf "%f ", time_arr[i*n_comparisons + j];
-            printf "%i ", memory_arr[i*n_comparisons + j];
+            if(j<2)
+            {
+                printf "%i ", memory_arr[i*n_comparisons + j]*n_threads;
+            }
+            else
+            {
+                printf "%i ", memory_arr[i*n_comparisons + j];
+            }
+            
             Fenhanced = default_elapsed/default_time;
             Senhanced = default_time/time_arr[i*n_comparisons + j];
             printf "%f ", (1/((1-Fenhanced) + (Fenhanced/Senhanced)));

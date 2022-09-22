@@ -30,3 +30,9 @@ set ylabel 'Speedup'
 set terminal pngcairo size 1900,1900 enhanced
 set output 'images/mydataamdahl.png'
 plot "mydata.dat" using 1:4 title "ForkSocket" with lines lw 10, "" using 1:7 title "ForkPipe" with lines lw 10, "" using 1:10 title "OMP" with lines lw 10, "" using 1:13 title "Pthreads" with lines lw 10
+
+set xlabel 'Threads'
+set ylabel 'Time (s)'
+set terminal pngcairo size 1900,1900 enhanced
+set output 'images/socketpipe.png'
+plot "mydata.dat" using 1:2 title "ForkSocket" with lines lw 10, "" using 1:5 title "ForkPipe" with lines lw 10
