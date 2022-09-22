@@ -2,27 +2,27 @@ PARAMS=-Wall -fdiagnostics-color=always -lm
 UNAME := $(shell uname -s)
 OBJ=obj
 all:
-	make mb5
-	make mb5_omp
-	make mb5_pthr
-	make mb5_fork
+	make mb5.out
+	make mb5_omp.out
+	make mb5_pthr.out
+	make mb5_fork.out
 
 
-mb5: mandelbrot5.c
-	gcc -c -o $@ $<
+mb5.out: mandelbrot5.c
+	gcc $< -o $@ $(PARAMS)
 
-mb5_omp: mandelbrot5_omp.c
+mb5_omp.out: mandelbrot5_omp.c
 ifeq ($(UNAME), Linux)
-	gcc -c -o $@ $<  -fopenmp $(PARAMS)
+	gcc $< -o $@   -fopenmp $(PARAMS)
 endif
 ifeq ($(UNAME), Darwin)
-	gcc -c -o $@ $< -Xclang -fopenmp -lomp $(PARAMS)
+	gcc $< -o $@ -Xclang -fopenmp -lomp $(PARAMS)
 endif
-mb5_pthr: mandelbrot5_pthr.c
-	gcc -c -o $@ $< -pthread $(PARAMS)
+mb5_pthr.out: mandelbrot5_pthr.c
+	gcc $< -o $@  -pthread $(PARAMS)
 
-mb5_fork: mandelbrot5_fork.c 
-	gcc -c -o $@ $< $(PARAMS)
+mb5_fork.out: mandelbrot5_fork.c 
+	gcc $< -o $@ $(PARAMS)
 
 clean:
 	rm *.o
