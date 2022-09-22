@@ -85,25 +85,25 @@ int main(int argc, char *argv[])
 	initialise(&p);
 	end = clock();
 	cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-	printf("Initialisation time: %f seconds\n", cpu_time_used);
+	// printf("Initialisation time: %f seconds\n", cpu_time_used);
 
 	start = clock();
 	mandelCompute(&p);
 	end = clock();
 	cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-	printf("Mandelbrot computation time: %f seconds\n", cpu_time_used);
+	// printf("Mandelbrot computation time: %f seconds\n", cpu_time_used);
 
 	start = clock();
 	histogramColouring(&p);
 	end = clock();
 	cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-	printf("Histogram colouring time: %f seconds\n", cpu_time_used);
+	// printf("Histogram colouring time: %f seconds\n", cpu_time_used);
 
 	start = clock();
 	writeToFile(p);
 	end = clock();
 	cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-	printf("Writing to file time: %f seconds\n", cpu_time_used);
+	// printf("Writing to file time: %f seconds\n", cpu_time_used);
 	freeMemory(p);
 	
 	return (0);

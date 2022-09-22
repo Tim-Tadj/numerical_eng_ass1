@@ -52,6 +52,7 @@ int main(int argc, char *argv[])
 	int maxIter;
 	double xc, yc, size;
 	Parameters p;
+	p.numThreads = NUM_THREADS;
 	
 	if (argc < 2) {
 		printf("Usage: mandelbrot maxIter [x y size]\n\nUsing default values\n");
@@ -76,13 +77,29 @@ int main(int argc, char *argv[])
 		p.xMax = xc + size;
 		p.yMax = yc + size;
 	}
+	else if (argc == 6) {
+		sscanf(argv[1], "%i", &maxIter);
+		sscanf(argv[2], "%lf", &xc);
+		sscanf(argv[3], "%lf", &yc);
+		sscanf(argv[4], "%lf", &size);
+		sscanf(argv[5], "%i", &p.numThreads);
+		
+		size = size / 2;
+		p.xMin = xc - size;
+		p.yMin = yc - size;
+		p.xMax = xc + size;
+		p.yMax = yc + size;
+	}
+	else {
+		printf("Usage: mandelbrot maxIter [x y size]\n");
+		exit(1);
+	}
 
 	p.maxIter = maxIter;
 	p.width = WIDTH;
 	p.height = HEIGHT;
-	p.numThreads = NUM_THREADS;
 
-	
+	 
 	printf("xMin = %lf\nxMax = %lf\nyMin = %lf\nyMax = %lf\nMaximum iterations = %i\n", p.xMin, p.xMax, p.yMin, p.yMax, p.maxIter);
 	
 	//time each function call using timespec
@@ -94,35 +111,35 @@ int main(int argc, char *argv[])
 	clock_gettime(CLOCK_MONOTONIC, &finish_time);
 	elapsed = (finish_time.tv_sec - start_time.tv_sec);
 	elapsed += (finish_time.tv_nsec - start_time.tv_nsec) / 1000000000.0;
-	printf("Initialisation time: %f seconds\n", elapsed);
+	// printf("Initialisation time: %f seconds\n", elapsed);
 
 	clock_gettime(CLOCK_MONOTONIC, &start_time);
 	mandelCompute(&p);
 	clock_gettime(CLOCK_MONOTONIC, &finish_time);
 	elapsed = (finish_time.tv_sec - start_time.tv_sec);
 	elapsed += (finish_time.tv_nsec - start_time.tv_nsec) / 1000000000.0;
-	printf("Mandelbrot computation time: %f seconds\n", elapsed);
+	// printf("Mandelbrot computation time: %f seconds\n", elapsed);
 
 	clock_gettime(CLOCK_MONOTONIC, &start_time);
 	histogramColouring(&p);
 	clock_gettime(CLOCK_MONOTONIC, &finish_time);
 	elapsed = (finish_time.tv_sec - start_time.tv_sec);
 	elapsed += (finish_time.tv_nsec - start_time.tv_nsec) / 1000000000.0;
-	printf("Histogram colouring time: %f seconds\n", elapsed);
+	// printf("Histogram colouring time: %f seconds\n", elapsed);
 
 	clock_gettime(CLOCK_MONOTONIC, &start_time);
 	writeToFile(p);
 	clock_gettime(CLOCK_MONOTONIC, &finish_time);
 	elapsed = (finish_time.tv_sec - start_time.tv_sec);
 	elapsed += (finish_time.tv_nsec - start_time.tv_nsec) / 1000000000.0;
-	printf("Writing to file time: %f seconds\n", elapsed);
+	// printf("Writing to file time: %f seconds\n", elapsed);
 
 	clock_gettime(CLOCK_MONOTONIC, &start_time);
 	freeMemory(p);
 	clock_gettime(CLOCK_MONOTONIC, &finish_time);
 	elapsed = (finish_time.tv_sec - start_time.tv_sec);
 	elapsed += (finish_time.tv_nsec - start_time.tv_nsec) / 1000000000.0;
-	printf("Freeing memory time: %f seconds\n", elapsed);
+	// printf("Freeing memory time: %f seconds\n", elapsed);
 	
 	return (0);
 }

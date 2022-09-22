@@ -77,7 +77,9 @@ int main(int argc, char *argv[])
 {
 	int maxIter;
 	double xc, yc, size;
+	char ipctype;
 	Parameters p;
+	p.numProcesses = NUM_PROCESSES;
 	
 	// IPC_TYPE = IPC_SOCKET;
 
@@ -104,12 +106,42 @@ int main(int argc, char *argv[])
 		p.xMax = xc + size;
 		p.yMax = yc + size;
 	}
+	else if (argc == 6) {
+		sscanf(argv[1], "%i", &maxIter);
+		sscanf(argv[2], "%lf", &xc);
+		sscanf(argv[3], "%lf", &yc);
+		sscanf(argv[4], "%lf", &size);
+		sscanf(argv[5], "%i", &p.numProcesses);
+		
+		size = size / 2;
+		p.xMin = xc - size;
+		p.yMin = yc - size;
+		p.xMax = xc + size;
+		p.yMax = yc + size;
+	}
+	else if (argc == 7) {
+		sscanf(argv[1], "%i", &maxIter);
+		sscanf(argv[2], "%lf", &xc);
+		sscanf(argv[3], "%lf", &yc);
+		sscanf(argv[4], "%lf", &size);
+		sscanf(argv[5], "%i", &p.numProcesses);
+		sscanf(argv[6], "%c", &ipctype);
+		
+		size = size / 2;
+		p.xMin = xc - size;
+		p.yMin = yc - size;
+		p.xMax = xc + size;
+		p.yMax = yc + size;
+	}
+	else {
+		printf("Invalid num params\n");
+		exit(1);
+	}
 
 	p.maxIter = maxIter;
 	p.width = WIDTH;
 	p.height = HEIGHT;
-	p.numProcesses = NUM_PROCESSES;
-	p.ipctype = 's';
+	p.ipctype = ipctype;
 
 
 	printf("xMin = %lf\nxMax = %lf\nyMin = %lf\nyMax = %lf\nMaximum iterations = %i\n", p.xMin, p.xMax, p.yMin, p.yMax, p.maxIter);
@@ -123,35 +155,35 @@ int main(int argc, char *argv[])
 	clock_gettime(CLOCK_MONOTONIC, &finish_time);
 	elapsed = (finish_time.tv_sec - start_time.tv_sec);
 	elapsed += (finish_time.tv_nsec - start_time.tv_nsec) / 1000000000.0;
-	printf("Initialisation time: %f seconds\n", elapsed);
+	// printf("Initialisation time: %f seconds\n", elapsed);
 
 	clock_gettime(CLOCK_MONOTONIC, &start_time);
 	mandelcompute_fork(&p);
 	clock_gettime(CLOCK_MONOTONIC, &finish_time);
 	elapsed = (finish_time.tv_sec - start_time.tv_sec);
 	elapsed += (finish_time.tv_nsec - start_time.tv_nsec) / 1000000000.0;
-	printf("Mandelbrot computation time: %f seconds\n", elapsed);
+	// printf("Mandelbrot computation time: %f seconds\n", elapsed);
 
 	clock_gettime(CLOCK_MONOTONIC, &start_time);
 	histogramColouring(&p);
 	clock_gettime(CLOCK_MONOTONIC, &finish_time);
 	elapsed = (finish_time.tv_sec - start_time.tv_sec);
 	elapsed += (finish_time.tv_nsec - start_time.tv_nsec) / 1000000000.0;
-	printf("Histogram colouring time: %f seconds\n", elapsed);
+	// printf("Histogram colouring time: %f seconds\n", elapsed);
 
 	clock_gettime(CLOCK_MONOTONIC, &start_time);
 	writeToFile(p);
 	clock_gettime(CLOCK_MONOTONIC, &finish_time);
 	elapsed = (finish_time.tv_sec - start_time.tv_sec);
 	elapsed += (finish_time.tv_nsec - start_time.tv_nsec) / 1000000000.0;
-	printf("Writing to file time: %f seconds\n", elapsed);
+	// printf("Writing to file time: %f seconds\n", elapsed);
 
 	clock_gettime(CLOCK_MONOTONIC, &start_time);
 	freeMemory(p);
 	clock_gettime(CLOCK_MONOTONIC, &finish_time);
 	elapsed = (finish_time.tv_sec - start_time.tv_sec);
 	elapsed += (finish_time.tv_nsec - start_time.tv_nsec) / 1000000000.0;
-	printf("Freeing memory time: %f seconds\n", elapsed);
+	// printf("Freeing memory time: %f seconds\n", elapsed);
 	
 	return (0);
 }
@@ -321,7 +353,6 @@ int chwrite(int fd, int *buf, int total_ints, int chunk_size)
 
 void mandelcompute_fork(Parameters *p)
 {
-	printf("Using fork() and pipes to compute Mandelbrot set\n");
 	int n_processes = p->numProcesses;
 	int n_children = n_processes-1;
 	int fd[n_children][IPC_DIM];
@@ -373,7 +404,7 @@ void mandelcompute_fork(Parameters *p)
 
 
 	// create child processes and store their process ids
-	printf("Forking %d processes\n", p->numProcesses -1);
+	// printf("Forking %d processes\n", p->numProcesses -1);
 	for (int i = 1; i < n_processes; i++) {
 		child_id = fork();
 		if (child_id == 0) {
@@ -386,7 +417,7 @@ void mandelcompute_fork(Parameters *p)
 	if (child_id == 0) {
 		p->process_idx = process_idx;
 		mandelComputeProcess(p);
-		printf("child %d writing to fd %i\n", process_idx-1, fd[process_idx-1][WRITE]);
+		// printf("child %d writing to fd %i\n", process_idx-1, fd[process_idx-1][WRITE]);
 		int* buf = &p->iterations[i_start[process_idx]*p->width];
 		if (p->ipctype=='p'){
 			chwrite(fd[process_idx-1][WRITE], buf, chunk_size*p->width, 1000);
@@ -396,12 +427,12 @@ void mandelcompute_fork(Parameters *p)
 		}
 		exit(0);
 	} else {
-		printf("I am the parent\n");
+		// printf("I am the parent\n");
 		mandelComputeProcess(p);
 		for (int i = 0; i < n_children; i++) {
 			chunk_size = i_end[i+1] - i_start[i+1];
 			int* buf = &p->iterations[i_start[i+1]*p->width];
-			printf("parent reading from fd %i\n", fd[i][READ]);
+			// printf("parent reading from fd %i\n", fd[i][READ]);
 			if(p->ipctype=='p'){
 				chread(fd[i][READ], buf, p->width*chunk_size, 1000);
 			}
@@ -409,7 +440,7 @@ void mandelcompute_fork(Parameters *p)
 				chread(fd[i][PARENT], buf, p->width*chunk_size, 1000);
 			}
 		}
-		printf("parent finished reading from children\n");
+		// printf("parent finished reading from children\n");
 	}
 
 	// checkl for non-zero elements in iterations array
@@ -421,7 +452,7 @@ void mandelcompute_fork(Parameters *p)
 			}
 		}
 	}
-	printf("non-zero elements in iterations array: %d\n", count);
+	// printf("non-zero elements in iterations array: %d\n", count);
 }
 	
 
