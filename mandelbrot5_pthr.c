@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
 
 	
 	if (argc < 2) {
-		printf("Usage: mandelbrot maxIter [x y size]\n\nUsing default values\n");
+		// printf("Usage: mandelbrot maxIter [x y size]\n\nUsing default values\n");
 		maxIter = 5000;
 		p.xMin = p.yMin = -2;
 		p.xMax = p.yMax = 2;
@@ -102,7 +102,7 @@ int main(int argc, char *argv[])
 	p.height = HEIGHT;
 	p.numThreads = NUM_THREADS;
 
-	printf("xMin = %lf\nxMax = %lf\nyMin = %lf\nyMax = %lf\nMaximum iterations = %i\n", p.xMin, p.xMax, p.yMin, p.yMax, p.maxIter);
+	// printf("xMin = %lf\nxMax = %lf\nyMin = %lf\nyMax = %lf\nMaximum iterations = %i\n", p.xMin, p.xMax, p.yMin, p.yMax, p.maxIter);
 	
 	//time each function call using timespec
 	struct timespec start_time, finish_time;
@@ -120,7 +120,7 @@ int main(int argc, char *argv[])
 	clock_gettime(CLOCK_MONOTONIC, &finish_time);
 	elapsed = (finish_time.tv_sec - start_time.tv_sec);
 	elapsed += (finish_time.tv_nsec - start_time.tv_nsec) / 1000000000.0;
-	// printf("Mandelbrot computation time: %f seconds\n", elapsed);
+	printf("Pthr: threads:%d time:%f seconds\n", p.numThreads, elapsed);
 
 	clock_gettime(CLOCK_MONOTONIC, &start_time);
 	histogramColouring(&p);

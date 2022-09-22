@@ -71,14 +71,14 @@ do
     # the default mandelbrot does not require a thread count
     if [ $program == "mb5.out" ]; then
         echo "Running $program with $iterations iterations, x origin = $x, y origin = $y, window size = $size"
-        /usr/bin/time ./$program $iterations $x $y $size 2>&1 > /dev/null | cat >> output.txt
+        /usr/bin/time ./$program $iterations $x $y $size 2>&1 >> output.txt | cat >> output.txt
     # given as 's' and 'p' respectively
     elif [ $program == "mb5_fork.out" ]; then
         echo "Running $program with $iterations iterations and $threads threads, x origin = $x, y origin = $y, window size = $size, '$ipc' type IPC"
-        /usr/bin/time ./$program $iterations $x $y $size $threads $ipc 2>&1 > /dev/null | cat >> output.txt
+        /usr/bin/time ./$program $iterations $x $y $size $threads $ipc 2>&1 >> output.txt | cat >> output.txt
     else
         echo "Running $program with $iterations iterations and $threads threads, x origin = $x, y origin = $y, window size = $size"
-        /usr/bin/time ./$program $iterations $x $y $size $threads 2>&1 > /dev/null | cat >> output.txt
+        /usr/bin/time ./$program $iterations $x $y $size $threads 2>&1 >> output.txt | cat >> output.txt
     fi
     
     # plot the mandel.dat file using gnuplot and the mandel.gp file

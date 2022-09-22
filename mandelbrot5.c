@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
 	Parameters p;
 	
 	if (argc < 2) {
-		printf("Usage: mandelbrot maxIter [x y size]\n\nUsing default values\n");
+		// printf("Usage: mandelbrot maxIter [x y size]\n\nUsing default values\n");
 		maxIter = 5000;
 		p.xMin = p.yMin = -2;
 		p.xMax = p.yMax = 2;
@@ -76,7 +76,7 @@ int main(int argc, char *argv[])
 	p.width = WIDTH;
 	p.height = HEIGHT;
 
-	printf("xMin = %lf\nxMax = %lf\nyMin = %lf\nyMax = %lf\nMaximum iterations = %i\n", p.xMin, p.xMax, p.yMin, p.yMax, p.maxIter);
+	// printf("xMin = %lf\nxMax = %lf\nyMin = %lf\nyMax = %lf\nMaximum iterations = %i\n", p.xMin, p.xMax, p.yMin, p.yMax, p.maxIter);
 	
 	//time each function call
 	clock_t start, end;
@@ -91,7 +91,7 @@ int main(int argc, char *argv[])
 	mandelCompute(&p);
 	end = clock();
 	cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-	// printf("Mandelbrot computation time: %f seconds\n", cpu_time_used);
+	printf("Default computation time: %f seconds\n", cpu_time_used);
 
 	start = clock();
 	histogramColouring(&p);
