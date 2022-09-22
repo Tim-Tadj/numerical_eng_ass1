@@ -32,8 +32,16 @@ else
     threads=$5
 fi
 
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    openFunc=wslview
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+    openFunc=open
+fi
+
 ./mb5_omp.out $iterations $x $y $size $threads 
 # Display the fractal
 
 gnuplot mandel.gp
 mv mandel.png mandel_omp.png
+
+$openFunc mandel_omp.png

@@ -13,10 +13,10 @@ set palette model RGB defined (0 'black', 0.5 'blue', 1 'white')
 splot "mandel.dat"
 
 
-set terminal wxt size 800,800
-set bmargin 0
-set lmargin 0
-set rmargin 0
-set tmargin 0
-unset colorbox
-replot
+# set terminal wxt size 800,800
+# set bmargin 0
+# set lmargin 0
+# set rmargin 0
+# set tmargin 0
+# unset colorbox
+# replot
