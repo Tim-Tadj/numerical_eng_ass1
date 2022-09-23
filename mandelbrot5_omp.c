@@ -14,7 +14,7 @@
 #include <time.h>
 #include <omp.h>
 //test comment
-//new comment
+//new comment river
 
 #define WIDTH 1000	
 #define HEIGHT 1000	
