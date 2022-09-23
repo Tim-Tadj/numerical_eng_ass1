@@ -13,7 +13,7 @@
 #include <complex.h>
 #include <time.h>
 #include <omp.h>
-
+//test comment
 
 #define WIDTH 1000	
 #define HEIGHT 1000	
