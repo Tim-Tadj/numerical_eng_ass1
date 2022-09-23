@@ -14,7 +14,11 @@
 #include <time.h>
 #include <omp.h>
 //test comment
+<<<<<<< HEAD
 //new comment tim
+=======
+//new comment river
+>>>>>>> rivs_branch
 
 #define WIDTH 1000	
 #define HEIGHT 1000	
