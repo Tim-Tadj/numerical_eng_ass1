@@ -38,9 +38,11 @@ fi
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     timeProgram=/usr/bin/time
     awkProgram=awk
+    openFunc=wslview
 else
     timeProgram=gtime
     awkProgram=gawk
+    openFunc=open
 fi
 
 echo $timeProgram
@@ -102,13 +104,21 @@ do
         if $save_plot == true; then
             gnuplot mandel.gp > /dev/null
             # save the plot as a png file
+            mkdir -p images
             mv mandel.png images/$program.png
         fi
     done
 done
 
 $awkProgram -f comparison.awk 'output.txt' > mydata.dat
+mkdir -p images
 gnuplot mydata.gp
+
+# open the plot
+$openFunc images/mydatatime.png
+$openFunc images/mydatamemory.png
+$openFunc images/mydataamdahl.png
+$openFunc images/socketpipe.png
 
 # command to run this script
 # sh performance_analysis.sh
