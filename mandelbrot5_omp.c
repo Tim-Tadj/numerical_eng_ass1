@@ -14,6 +14,7 @@
 #include <time.h>
 #include <omp.h>
 //test comment
+//new comment
 
 #define WIDTH 1000	
 #define HEIGHT 1000	
