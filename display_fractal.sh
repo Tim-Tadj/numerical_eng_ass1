@@ -1,6 +1,6 @@
 
-make clean > /dev/null
-make all > /dev/null
+make clean 2&> /dev/null
+make all 2&> /dev/null
 
 if [ -z $1 ]; then
     iterations=20000
@@ -38,7 +38,7 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
     openFunc=open
 fi
 
-./mb5_omp.out $iterations $x $y $size $threads 
+/usr/bin/time ./mb5_omp.out $iterations $x $y $size $threads
 # Display the fractal
 
 gnuplot mandel.gp
